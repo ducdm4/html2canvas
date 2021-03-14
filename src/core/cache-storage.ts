@@ -128,7 +128,18 @@ export class Cache {
             if (isInlineBase64Image(src) || useCORS) {
                 img.crossOrigin = 'anonymous';
             }
-            img.src = src;
+            // scsoft workaround
+            let str = src
+            let findIndex = str.indexOf('&X-Amz-Date')
+            if (findIndex > -1) {
+                let xDate = str.substring(findIndex, findIndex + 28)
+                str = str.replace(xDate, '')
+                str += xDate
+                img.src = str;
+            } else {
+                img.src = src;
+            }
+            // end scsoft workaround
             if (img.complete === true) {
                 // Inline XML images may fail to parse, throwing an Error later on
                 setTimeout(() => resolve(img), 500);
