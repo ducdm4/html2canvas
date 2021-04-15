@@ -129,15 +129,16 @@ export class Cache {
                 img.crossOrigin = 'anonymous';
             }
             // scsoft workaround
-            let str = src
-            let findIndex = str.indexOf('&X-Amz-Date')
+            let str = src;
+            let findIndex = str.indexOf('&X-Amz-Date');
             if (findIndex > -1) {
-                let xDate = str.substring(findIndex, findIndex + 28)
-                str = str.replace(xDate, '')
-                str += xDate
+                let xDate = str.substring(findIndex, findIndex + 28);
+                str = str.replace(xDate, '');
+                str += xDate;
                 img.src = str;
             } else {
-                img.src = src;
+                let xTime = new Date().getTime();
+                img.src = `${src}?dump=${xTime}`;
             }
             // end scsoft workaround
             if (img.complete === true) {

@@ -2540,7 +2540,8 @@ var Cache = /** @class */ (function () {
                                     img.src = str;
                                 }
                                 else {
-                                    img.src = src;
+                                    var xTime = new Date().getTime();
+                                    img.src = src + "?dump=" + xTime;
                                 }
                                 // end scsoft workaround
                                 if (img.complete === true) {
