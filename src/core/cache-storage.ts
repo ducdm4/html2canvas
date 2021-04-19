@@ -131,14 +131,17 @@ export class Cache {
             // scsoft workaround
             let str = src;
             let findIndex = str.indexOf('&X-Amz-Date');
+            let findIndexAws = str.indexOf('amazonaws.com');
             if (findIndex > -1) {
                 let xDate = str.substring(findIndex, findIndex + 28);
                 str = str.replace(xDate, '');
                 str += xDate;
                 img.src = str;
-            } else {
+            } else if (findIndexAws > -1) {
                 let xTime = new Date().getTime();
                 img.src = `${src}?dump=${xTime}`;
+            } else {
+                img.src = src;
             }
             // end scsoft workaround
             if (img.complete === true) {
